@@ -2,6 +2,17 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
+          
+   <proxies>
+    <proxy>
+      <id>myproxy</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.lfrz.at</host>
+      <port>8080</port>
+      <nonProxyHosts>*.ocp.lfrz.gv.at, *.vie01.local</nonProxyHosts>
+    </proxy>
+  </proxies>
   <!-- Use this settings config file when version of Maven is: 3.0.5 (or older) .... as is the case with S2I with JBoss OSE containers  
        With this version of mvn, variables can not be used.
        Thus, the URL to Nexus repo is hard-coded
