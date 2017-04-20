@@ -4,14 +4,14 @@ node {
     stage('Build') {
         build 'webapp-war'
 
-        openshiftBuild apiURL: '', authToken: '', bldCfg: 'webapp-dev', checkForTriggeredDeployments: 'false', namespace: OCP_PROJECT, verbose: 'false'
-        openshiftVerifyBuild apiURL: '', authToken: '', bldCfg: 'webapp-dev', checkForTriggeredDeployments: 'false', namespace: OCP_PROJECT, verbose: 'false'
+        openshiftBuild apiURL: '', authToken: '', bldCfg: 'webapp-dev', checkForTriggeredDeployments: 'false', namespace: cicd, verbose: 'false'
+        openshiftVerifyBuild apiURL: '', authToken: '', bldCfg: 'webapp-dev', checkForTriggeredDeployments: 'false', namespace: cicd, verbose: 'false'
     }
     stage('Deploy to Dev') {
-        openshiftDeploy apiURL: '', authToken: '', depCfg: 'webapp-dev', namespace: OCP_PROJECT, verbose: 'false', waitTime: ''
-        openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: 'webapp-dev', namespace: OCP_PROJECT, replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+        openshiftDeploy apiURL: '', authToken: '', depCfg: 'webapp-dev', namespace: cicd, verbose: 'false', waitTime: ''
+        openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: 'webapp-dev', namespace: cicd, replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
 
-        openshiftTag alias: 'false', apiURL: '', authToken: '', destStream: 'webapp', destTag: 'qa', destinationAuthToken: '', destinationNamespace: OCP_PROJECT, namespace: OCP_PROJECT, srcStream: 'webapp', srcTag: 'latest', verbose: 'false'
+        openshiftTag alias: 'false', apiURL: '', authToken: '', destStream: 'webapp', destTag: 'qa', destinationAuthToken: '', destinationNamespace: cicd, namespace: cicd, srcStream: 'webapp', srcTag: 'latest', verbose: 'false'
 
     }
     stage('Approve QA Deployment') {
@@ -21,10 +21,10 @@ node {
     }
     // Publish to a QA environment
     stage('Deploy to QA') {
-        openshiftDeploy apiURL: '', authToken: '', depCfg: 'webapp-qa', namespace: OCP_PROJECT, verbose: 'false', waitTime: ''
-        openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: 'webapp-qa', namespace: OCP_PROJECT, replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+        openshiftDeploy apiURL: '', authToken: '', depCfg: 'webapp-qa', namespace: cicd, verbose: 'false', waitTime: ''
+        openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: 'webapp-qa', namespace: cicd, replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
 
-        openshiftTag alias: 'false', apiURL: '', authToken: '', destStream: 'webapp', destTag: 'prod', destinationAuthToken: '', destinationNamespace: OCP_PROJECT, namespace: OCP_PROJECT, srcStream: 'webapp', srcTag: 'qa', verbose: 'false'
+        openshiftTag alias: 'false', apiURL: '', authToken: '', destStream: 'webapp', destTag: 'prod', destinationAuthToken: '', destinationNamespace: cicd, namespace: cicd, srcStream: 'webapp', srcTag: 'qa', verbose: 'false'
     }
     // Wait until authorization to push to production
     stage('Approve Production Deployment') {
@@ -34,7 +34,7 @@ node {
     }
     // Push to production
     stage('Deploy to Production') {
-        openshiftDeploy apiURL: '', authToken: '', depCfg: 'webapp-prod', namespace: OCP_PROJECT, verbose: 'false', waitTime: ''
-        openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: 'webapp-prod', namespace: OCP_PROJECT, replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
+        openshiftDeploy apiURL: '', authToken: '', depCfg: 'webapp-prod', namespace: cicd, verbose: 'false', waitTime: ''
+        openshiftVerifyDeployment apiURL: '', authToken: '', depCfg: 'webapp-prod', namespace: cicd, replicaCount: '1', verbose: 'false', verifyReplicaCount: 'false', waitTime: ''
     }
 }
