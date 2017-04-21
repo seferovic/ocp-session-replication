@@ -10,7 +10,7 @@
       <protocol>http</protocol>
       <host>proxy.lfrz.at</host>
       <port>8080</port>
-      <nonProxyHosts>*.ocp.lfrz.gv.at, *.vie01.local</nonProxyHosts>
+      <nonProxyHosts>*.lfrz.gv.at|*.vie01.local|*.lfrz.at</nonProxyHosts>
     </proxy>
   </proxies>
   <!-- Use this settings config file when version of Maven is: 3.0.5 (or older) .... as is the case with S2I with JBoss OSE containers  
